@@ -1,0 +1,13 @@
+#!/bin/bash -eu
+
+lftp -d -u $USER,$PASS $HOST -e "\
+  set ftp:ssl-allow no; \
+  mirror \
+  --reverse \
+  --delete \
+  --verbose \
+  --parallel=12 \
+  -X .DS_Store \
+  $LOCAL_DIR \
+  $REMOTE_DIR; \
+  exit"

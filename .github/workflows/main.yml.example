@@ -1,0 +1,35 @@
+name: 🚀 Deploy website on push
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  cleanup-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rokroskar/workflow-run-cleanup-action@master
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+    if: "!startsWith(github.ref, 'refs/tags/')"
+
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+      - uses: bahmutov/npm-install@v1
+      - run: npm run build
+      - run: which lftp || sudo apt-get update -y && sudo apt-get install lftp -y
+      - name: 📂 Run ftp_upload
+        run: |
+          HOST="${{ secrets.KAGOYA_FTP_SERVER }}" \
+          USER="${{ secrets.KAGOYA_FTP_USERNAME }}" \
+          PASS="${{ secrets.KAGOYA_FTP_PASSWORD }}" \
+          LOCAL_DIR="./dist/" \
+          REMOTE_DIR="/public_html/sample/projectname/" ./.github/ftp_upload

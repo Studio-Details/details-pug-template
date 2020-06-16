@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# original (gitignore)
+.dist/
+dist/
+.gulpCached/
+
+# original
+static/
+wp-html/
+src/modules/js/vendors/*
+!src/modules/js/vendors/kgl/

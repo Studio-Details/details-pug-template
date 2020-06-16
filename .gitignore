@@ -1,0 +1,27 @@
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env
+
+# IDE / Editor
+.idea
+.vscode/
+
+# Mac OSX
+.DS_Store
+
+# WordPress
+wp-config.php
+aiowps_backups/
+
+# doc
+/jsdoc/
+/sassdoc/
+
+# original
+/.dist/
+/dist/
+/.gulpCached/
+/src/www/assets/img/common/svg-symbols.svg
+/public/cms/wp-content/uploads
